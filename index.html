@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TengAPP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .model-selector {
+            margin-bottom: 32px;
+        }
+
+        .model-selector label {
+            display: block;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        .model-select {
+            width: 100%;
+            padding: 16px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            border-radius: 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23FFFFFF' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 16px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            border-radius: 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            outline: 2px solid #FFFFFF;
+            outline-offset: 2px;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        .icon-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-label {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 15px;
+            font-weight: 300;
+            opacity: 0.7;
+        }
+
+        .browse-btn {
+            padding: 12px 24px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            border-radius: 0;
+            white-space: nowrap;
+        }
+
+        .browse-btn:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 18px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background-color 0.2s;
+        }
+
+        .generate-btn:hover:not(:disabled) {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .log-area {
+            width: 100%;
+            height: 140px;
+            padding: 16px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-y: auto;
+            resize: none;
+            border-radius: 0;
+        }
+
+        .banner {
+            padding: 20px;
+            margin: 32px 0;
+            border: 1px solid #FFFFFF;
+            border-radius: 0;
+        }
+
+        .banner-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .banner-content {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .banner-content a {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
+
+        .setup-warning {
+            background-color: #000000;
+            border: 1px solid #FFFFFF;
+            padding: 20px;
+            margin: 32px 0;
+            border-radius: 0;
+        }
+
+        .setup-warning-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .setup-warning-steps {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .setup-warning-steps ol {
+            margin-left: 24px;
+            margin-top: 12px;
+        }
+
+        .setup-warning-steps li {
+            margin-bottom: 8px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #000000;
+            border: 1px solid #FFFFFF;
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .modal-text {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            border-radius: 0;
+            flex: 1;
+        }
+
+        .modal-btn:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 14px;
+            background-color: #000000;
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            margin-top: 16px;
+            border-radius: 0;
+        }
+
+        .preview-container {
+            margin: 32px 0;
+            border: 1px solid #FFFFFF;
+        }
+
+        .preview-toolbar {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 400px;
+            border: none;
+            background: #000;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 30px 15px;
+            }
+            
+            .title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+            
+            .model-selector, .form-group {
+                margin-bottom: 28px;
+            }
+            
+            .model-select, textarea, input[type="text"], .log-area {
+                padding: 14px;
+                font-size: 15px;
+            }
+            
+            .generate-btn {
+                padding: 16px;
+                font-size: 17px;
+            }
+            
+            .modal-content {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">TengAPP</h1>
+        
+        <div class="model-selector">
+            <label>AI Model</label>
+            <select id="model-select" class="model-select">
+                <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
+                <option value="llama-3.1-70b-versatile">Llama 3.1 70B</option>
+                <option value="kimi-k2-moonshot">Kimi K2 Moonshot</option>
+            </select>
+        </div>
+        
+        <div id="error-container"></div>
+        
+        <div class="form-group">
+            <label>Describe your app</label>
+            <textarea id="prompt-text" placeholder="e.g., A minimalist note-taking app with dark mode and sync capability"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>App name</label>
+            <input type="text" id="app-name" value="MyApp">
+        </div>
+        
+        <div class="form-group">
+            <label>App icon (optional)</label>
+            <div class="icon-row">
+                <span id="icon-label" class="icon-label">None (default icon will be generated)</span>
+                <button class="browse-btn" onclick="document.getElementById('file-input').click()">Browse</button>
+                <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
+            </div>
+        </div>
+        
+        <button id="generate-btn" class="generate-btn">Generate PWA</button>
+        
+        <div class="form-group">
+            <label>Log</label>
+            <textarea id="log-area" readonly></textarea>
+        </div>
+        
+        <div class="setup-warning">
+            <div class="setup-warning-title">Setup required</div>
+            <div class="setup-warning-steps">
+                <ol>
+                    <li>Replace "your_groq_api_key_here" on line 242 with your actual Groq API key</li>
+                    <li>Host this file on HTTPS (or use localhost for testing)</li>
+                    <li>Click "Generate PWA" to create your app</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for preview/edit decisions -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Preview & Edit</div>
+            <div class="modal-text">
+                ✅ Ready to test?<br>
+                <strong>Yes</strong> → Open live preview<br>
+                <strong>No</strong> → Request edits<br>
+                <strong>Cancel</strong> → Abort generation
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="handlePreviewChoice('yes')">Yes</button>
+                <button class="modal-btn" onclick="handlePreviewChoice('no')">No</button>
+                <button class="modal-btn" onclick="handlePreviewChoice('cancel')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for satisfaction check -->
+    <div id="satisfaction-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Satisfied?</div>
+            <div class="modal-text">Is the app working as expected?</div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="handleSatisfaction(true)">Yes</button>
+                <button class="modal-btn" onclick="handleSatisfaction(false)">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for edit feedback -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Request Changes</div>
+            <div class="modal-text">What should change?</div>
+            <input type="text" id="edit-feedback" class="modal-input" placeholder="e.g., Make the button blue">
+            <div class="modal-buttons" style="margin-top: 24px;">
+                <button class="modal-btn" onclick="submitEditFeedback()">Submit</button>
+                <button class="modal-btn" onclick="closeEditModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for completion -->
+    <div id="complete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">PWA Ready!</div>
+            <div class="modal-text">
+                Your Progressive Web App is ready!<br><br>
+                Look for the install banner in the new tab.<br>
+                Click "Install" to add it to your home screen.
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="openPWAInNewTab()">Open PWA</button>
+                <button class="modal-btn" onclick="hideModal('complete-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURATION - REPLACE THIS KEY =====
+        const GROQ_API_KEY = "your_groq_api_key_here"; // ←←← REPLACE WITH YOUR ACTUAL KEY
+        const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+        // ============================================
+
+        // State variables
+        let currentCode = "";
+        let currentAppName = "MyApp";
+        let iconFile = null;
+        let icon192 = null;
+        let icon512 = null;
+        let previewChoice = null;
+        let satisfactionChoice = null;
+        let editFeedback = null;
+        let pwaBlobUrl = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!GROQ_API_KEY || GROQ_API_KEY === "your_groq_api_key_here") {
+                showError('Missing API Key: Open this HTML file in a text editor and replace "your_groq_api_key_here" on line 242 with your actual Groq API key');
+                document.getElementById('generate-btn').disabled = true;
+            }
+            
+            // Check HTTPS requirement
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                showWarning('For full PWA functionality, host this page on HTTPS or use localhost. Current URL: ' + location.href);
+            }
+        });
+
+        function log(message) {
+            const logArea = document.getElementById('log-area');
+            logArea.value += '[TengAPP] ' + message + '\n';
+            logArea.scrollTop = logArea.scrollHeight;
+            console.log('[TengAPP]', message);
+        }
+
+        function showError(message) {
+            const banner = document.createElement('div');
+            banner.className = 'banner';
+            banner.innerHTML = `
+                <div class="banner-title">Error</div>
+                <div class="banner-content">${message}</div>
+            `;
+            document.getElementById('error-container').appendChild(banner);
+        }
+
+        function showWarning(message) {
+            const banner = document.createElement('div');
+            banner.className = 'banner';
+            banner.innerHTML = `
+                <div class="banner-title">Warning</div>
+                <div class="banner-content">${message}</div>
+            `;
+            document.getElementById('error-container').appendChild(banner);
+        }
+
+        function showSuccess(message) {
+            const banner = document.createElement('div');
+            banner.className = 'banner';
+            banner.innerHTML = `
+                <div class="banner-title">Success</div>
+                <div class="banner-content">${message}</div>
+            `;
+            document.getElementById('error-container').appendChild(banner);
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                iconFile = file;
+                document.getElementById('icon-label').textContent = file.name;
+                document.getElementById('icon-label').style.opacity = '1';
+                
+                // Process icon immediately
+                processIcon(file);
+            }
+        }
+
+        function processIcon(file) {
+            return new Promise((resolve) => {
+                log("Processing icon...");
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        icon192 = resizeImage(img, 192, 192);
+                        icon512 = resizeImage(img, 512, 512);
+                        log("Icons generated (192x192, 512x512)");
+                        resolve(true);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function resizeImage(img, width, height) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            const ratio = Math.min(width / img.width, height / img.height);
+            const sx = (img.width - width / ratio) / 2;
+            const sy = (img.height - height / ratio) / 2;
+            const sw = width / ratio;
+            const sh = height / ratio;
+            
+            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
+            return canvas.toDataURL('image/png');
+        }
+
+        async function queryGroq(prompt, model) {
+            log(`Calling Groq API with model: ${model}`);
+            
+            const response = await fetch(GROQ_API_URL, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${GROQ_API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [{role: "user", content: prompt}],
+                    temperature: 0.2,
+                    max_tokens: 2048
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({}));
+                throw new Error(`API Error ${response.status}: ${error.error?.message || response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        async function previewAndEditLoop(initialCode, appName) {
+            currentCode = initialCode;
+            currentAppName = appName;
+            
+            while (true) {
+                // Show preview modal
+                showModal('preview-modal');
+                await waitForUserInput('preview');
+                
+                if (previewChoice === 'cancel') {
+                    return false;
+                } else if (previewChoice === 'yes') {
+                    try {
+                        // Create live preview
+                        const previewContainer = document.createElement('div');
+                        previewContainer.className = 'preview-container';
+                        previewContainer.innerHTML = `
+                            <div class="preview-toolbar">
+                                <span>📱 Mobile Preview</span>
+                                <button onclick="this.parentElement.remove()" style="background:#000;color:#fff;border:1px solid #fff;padding:6px 12px;font-family:Inter;font-size:14px;font-weight:400;">Close</button>
+                            </div>
+                            <iframe class="preview-frame" id="preview-iframe"></iframe>
+                        `;
+                        
+                        const generateBtn = document.getElementById('generate-btn');
+                        document.querySelector('.container').insertBefore(previewContainer, generateBtn.nextSibling);
+                        
+                        // Write code to iframe
+                        const iframe = document.getElementById('preview-iframe');
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframeDoc.open();
+                        iframeDoc.write(`
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>body { margin: 0; background: #000; color: #fff; font-family: Inter, sans-serif; padding: 20px; }</style>
+                            </head>
+                            <body>${currentCode}</body>
+                            </html>
+                        `);
+                        iframeDoc.close();
+                        
+                        log("Preview opened");
+                        
+                        // Show satisfaction modal
+                        showModal('satisfaction-modal');
+                        await waitForUserInput('satisfaction');
+                        
+                        // Remove preview
+                        previewContainer.remove();
+                        
+                        if (satisfactionChoice) {
+                            return true;
+                        } else {
+                            log("Additional edits requested");
+                        }
+                    } catch (error) {
+                        log(`Preview failed: ${error.message}`);
+                        alert(`Preview failed: ${error.message}`);
+                    }
+                } else {
+                    // Show edit modal
+                    document.getElementById('edit-feedback').value = '';
+                    showModal('edit-modal');
+                    await waitForUserInput('edit');
+                    
+                    if (!editFeedback) continue;
+                    
+                    log(`Editing: ${editFeedback}`);
+                    
+                    const editPrompt = `
+You are an expert PWA developer. Here is the current complete HTML file:
+
+${currentCode}
+
+USER REQUESTED CHANGE:
+${editFeedback}
+
+REQUIREMENTS:
+1. Return ONLY a complete, valid HTML file - nothing else
+2. Must include proper PWA structure with manifest and service worker
+3. Must be a single HTML file that works when opened directly
+4. Include all CSS/JS inline
+5. Must be mobile-responsive
+
+Return ONLY the complete HTML code with no explanations.
+`;
+                    
+                    try {
+                        const newCode = await queryGroq(editPrompt, document.getElementById('model-select').value);
+                        
+                        let cleanedCode = newCode.trim();
+                        if (cleanedCode.startsWith('```html')) cleanedCode = cleanedCode.substring(7);
+                        if (cleanedCode.startsWith('```')) cleanedCode = cleanedCode.substring(3);
+                        if (cleanedCode.endsWith('```')) cleanedCode = cleanedCode.substring(0, cleanedCode.length - 3);
+                        
+                        if (!cleanedCode.toLowerCase().includes('<!doctype html>') && !cleanedCode.toLowerCase().includes('<html')) {
+                            cleanedCode = `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${currentAppName}</title>\n</head>\n<body>\n${cleanedCode}\n</body>\n</html>`;
+                        }
+                        
+                        currentCode = cleanedCode.trim();
+                        log("Edit completed");
+                    } catch (error) {
+                        log(`Edit failed: ${error.message}`);
+                        alert(`Edit failed: ${error.message}`);
+                    }
+                }
+            }
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function waitForUserInput(type) {
+            return new Promise((resolve) => {
+                const interval = setInterval(() => {
+                    if (type === 'preview' && previewChoice !== null) {
+                        clearInterval(interval);
+                        previewChoice = null;
+                        resolve();
+                    } else if (type === 'satisfaction' && satisfactionChoice !== null) {
+                        clearInterval(interval);
+                        const choice = satisfactionChoice;
+                        satisfactionChoice = null;
+                        resolve(choice);
+                    } else if (type === 'edit' && editFeedback !== null) {
+                        clearInterval(interval);
+                        const feedback = editFeedback;
+                        editFeedback = null;
+                        resolve(feedback);
+                    }
+                }, 100);
+            });
+        }
+
+        function handlePreviewChoice(choice) {
+            previewChoice = choice;
+            hideModal('preview-modal');
+        }
+
+        function handleSatisfaction(choice) {
+            satisfactionChoice = choice;
+            hideModal('satisfaction-modal');
+        }
+
+        function submitEditFeedback() {
+            editFeedback = document.getElementById('edit-feedback').value.trim();
+            if (editFeedback) {
+                hideModal('edit-modal');
+            } else {
+                alert("Please describe what changes you'd like to make.");
+            }
+        }
+
+        function closeEditModal() {
+            editFeedback = null;
+            hideModal('edit-modal');
+        }
+
+        async function generateCompletePWAHTML(htmlCode, appName) {
+            log("Building complete PWA...");
+            
+            // Generate default icons if none provided
+            if (!icon192 || !icon512) {
+                log("Generating default app icons...");
+                icon192 = await generateDefaultIcon(192, appName.substring(0, 2));
+                icon512 = await generateDefaultIcon(512, appName.substring(0, 2));
+            }
+            
+            // Create manifest
+            const manifest = {
+                name: appName,
+                short_name: appName.substring(0, 12),
+                description: `${appName} - Progressive Web App`,
+                start_url: '.',
+                display: 'standalone',
+                background_color: '#000000',
+                theme_color: '#000000',
+                orientation: 'portrait',
+                icons: [
+                    { src: icon192, sizes: '192x192', type: 'image/png' },
+                    { src: icon512, sizes: '512x512', type: 'image/png' }
+                ]
+            };
+            
+            // Create service worker
+            const serviceWorkerCode = `
+const CACHE_NAME = '${appName.toLowerCase().replace(/[^a-z0-9]/g, '-')}-v1';
+self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match('./'))));
+`;
+            
+            const swBlob = new Blob([serviceWorkerCode], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(swBlob);
+            
+            // Create complete HTML
+            const completeHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>${appName}</title>
+    <link rel="manifest" href="application/manifest+json,${encodeURIComponent(JSON.stringify(manifest))}">
+    <link rel="apple-touch-icon" href="${icon192}">
+    <style>body { margin: 0; background: #000; color: #fff; font-family: Inter, sans-serif; }</style>
+</head>
+<body>
+    ${htmlCode}
+    
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('${swUrl}')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(console.error);
+            });
+        }
+        
+        // Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => {
+                if (deferredPrompt) showInstallBanner();
+            }, 2000);
+        });
+        
+        function showInstallBanner() {
+            if (document.getElementById('install-banner')) return;
+            const banner = document.createElement('div');
+            banner.id = 'install-banner';
+            banner.innerHTML = \`
+                <div style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#000;color:#fff;border:1px solid #fff;padding:20px 30px;z-index:10000;text-align:center;max-width:90%;">
+                    <div style="font-size:18px;font-weight:400;margin-bottom:10px;">Install ${appName}?</div>
+                    <div style="font-size:15px;font-weight:300;margin-bottom:16px;line-height:1.5;">Add to your home screen for quick access</div>
+                    <div style="display:flex;gap:12px;justify-content:center;">
+                        <button onclick="triggerInstall()" style="padding:10px 20px;background:#000;color:#fff;border:1px solid #fff;font-family:Inter;font-size:15px;cursor:pointer;">Install</button>
+                        <button onclick="this.parentElement.parentElement.remove()" style="padding:10px 20px;background:#000;color:#fff;border:1px solid #fff;font-family:Inter;font-size:15px;cursor:pointer;">Not now</button>
+                    </div>
+                </div>
+            \`;
+            document.body.appendChild(banner);
+        }
+        
+        function triggerInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    document.getElementById('install-banner')?.remove();
+                    deferredPrompt = null;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+`;
+            
+            log("PWA HTML assembled");
+            return completeHTML;
+        }
+
+        function generateDefaultIcon(size, letters) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, size, size);
+                
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = `bold ${size * 0.5}px Inter, sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(letters.toUpperCase(), size / 2, size / 2);
+                
+                resolve(canvas.toDataURL('image/png'));
+            });
+        }
+
+        function startGeneration() {
+            const prompt = document.getElementById('prompt-text').value.trim();
+            let appName = document.getElementById('app-name').value.trim() || "MyApp";
+            appName = appName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim() || "MyApp";
+            const model = document.getElementById('model-select').value;
+            
+            if (!prompt) {
+                alert("Please describe your app first.");
+                return;
+            }
+            
+            if (!GROQ_API_KEY || GROQ_API_KEY === "your_groq_api_key_here") {
+                alert("⚠️ You must set your GROQ_API_KEY in the HTML file (line 242) to use this app.");
+                return;
+            }
+            
+            // Reset UI
+            document.getElementById('log-area').value = '';
+            document.getElementById('generate-btn').disabled = true;
+            document.getElementById('error-container').innerHTML = '';
+            log("Starting PWA Generation...");
+            
+            _generateApp(prompt, appName, model);
+        }
+
+        async function _generateApp(prompt, appName, model) {
+            try {
+                log(`Generating PWA with ${model}...`);
+                
+                const fullPrompt = `
+You are an expert PWA developer. Create a complete, production-ready Progressive Web App as a SINGLE HTML FILE.
+
+REQUIREMENTS:
+1. Return ONLY valid HTML code - no explanations
+2. Single self-contained HTML file with embedded CSS/JS
+3. Mobile-responsive minimalist design
+4. Include PWA manifest and service worker registration
+5. Clean UI matching the user request
+
+USER REQUEST: ${prompt}
+
+Return ONLY the complete HTML code.
+`;
+                
+                const code = await queryGroq(fullPrompt, model);
+                
+                let cleanedCode = code.trim();
+                if (cleanedCode.startsWith('```html')) cleanedCode = cleanedCode.substring(7);
+                if (cleanedCode.startsWith('```')) cleanedCode = cleanedCode.substring(3);
+                if (cleanedCode.endsWith('```')) cleanedCode = cleanedCode.substring(0, cleanedCode.length - 3);
+                
+                if (!cleanedCode.toLowerCase().includes('<!doctype html>')) {
+                    cleanedCode = `<!DOCTYPE html>\n${cleanedCode}`;
+                }
+                
+                log("Initial PWA generated");
+                
+                // Preview and edit loop
+                const success = await previewAndEditLoop(cleanedCode, appName);
+                
+                if (!success) {
+                    log("Generation aborted by user");
+                    document.getElementById('generate-btn').disabled = false;
+                    return;
+                }
+                
+                // Build complete PWA
+                const completeHTML = await generateCompletePWAHTML(currentCode, appName);
+                const blob = new Blob([completeHTML], {type: 'text/html'});
+                pwaBlobUrl = URL.createObjectURL(blob);
+                
+                log(`${appName} PWA is ready!`);
+                showModal('complete-modal');
+                
+            } catch (error) {
+                log(`Generation failed: ${error.message}`);
+                console.error(error);
+                alert(`Generation failed: ${error.message}`);
+            } finally {
+                document.getElementById('generate-btn').disabled = false;
+            }
+        }
+
+        function openPWAInNewTab() {
+            if (!pwaBlobUrl) {
+                alert("No PWA available. Please generate one first.");
+                return;
+            }
+            
+            hideModal('complete-modal');
+            log("Opening PWA in new tab...");
+            
+            const pwaWindow = window.open(pwaBlobUrl, '_blank');
+            
+            if (!pwaWindow) {
+                log("Popup blocked! Please allow popups and try again.");
+                alert("Popup blocked! Please allow popups for this site and click 'Open PWA' again.");
+            } else {
+                log("PWA opened - look for the install banner!");
+            }
+        }
+
+        // Attach button handler
+        document.getElementById('generate-btn').addEventListener('click', startGeneration);
+    </script>
+</body>
+</html>
